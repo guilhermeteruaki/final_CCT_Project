@@ -11,3 +11,7 @@ def home(request):
 def about(request):
     pagename = Main.objects.get(name="My site")
     return render(request, 'front/about.html', {"pagename":pagename})
+
+def panel(request):
+    #pagename = Main.objects.get(name="My site")
+    return render(request, 'back/controlPanel.html')
