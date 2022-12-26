@@ -5,13 +5,14 @@ from .models import Main
 # Create your views here.
 
 def home(request):
-    #pagename = Main.objects.get(name="My site")
-    return render(request, 'front/home.html')
+    site = Main.objects.get(pk=3)
+    
+    return render(request, 'front/home.html', {'site':site})
 
 def about(request):
-    pagename = Main.objects.get(name="My site")
-    return render(request, 'front/about.html', {"pagename":pagename})
+    site = Main.objects.get(pk=3)
+    return render(request, 'front/about.html',  {'site':site})
 
 def panel(request):
-    #pagename = Main.objects.get(name="My site")
-    return render(request, 'back/controlPanel.html')
+    site = Main.objects.get(pk=3)
+    return render(request, 'back/controlPanel.html', {'site':site})
