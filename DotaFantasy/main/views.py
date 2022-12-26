@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Main, AuthUser
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 #views are how the site behaves
 
@@ -36,13 +37,17 @@ def sign_in(request):
         uuser = request.POST.get('username')
         upass = request.POST.get('password')
         
+        if uuser =="" or upass=="":
+            messages.warning(request, "Please porvide a username and a Password!")
+
         if uuser !="" and upass !="":
             user =authenticate(username=uuser, password=upass)
 
             if user != None:
                 login(request, user)
                 return redirect(panel)
-                
+            else:
+                messages.warning(request, "Username or password not match!")        
 
     site = Main.objects.get(pk=3)
     return render(request, 'back/sign-in.html',  {'site':site})
