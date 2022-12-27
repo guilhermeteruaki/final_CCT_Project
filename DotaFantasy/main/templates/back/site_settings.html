@@ -1,0 +1,140 @@
+{% extends 'back/Admintemplate.html' %}
+{% load static %}
+
+{% block headblock %}
+
+<script src="https://cdn.tiny.cloud/1/0fudtnjuf75v2kp0dhp5ga1hzaoseujj520f553o1azfutxj/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<title>{{site.name}} | Site Settings </title>
+
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+
+        <!-- Related styles of various icon packs and plugins -->
+        <link rel="stylesheet" href="{% static 'back/assets/css/plugins.css' %}">
+
+        <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+        <link rel="stylesheet" href="{% static 'back/assets/css/main.css' %}">
+
+        <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
+
+        <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
+        <link rel="stylesheet" href="{% static 'back/assets/css/themes.css' %}">
+        <!-- END Stylesheets -->
+
+        <!-- Modernizr (browser feature detection library) -->
+        <script src="{% static 'back/assets/js/vendor/modernizr.min.js' %}"></script>
+{% endblock headblock %}
+
+{% block mainblock %}
+<form action="" method="post" enctype="multipart/form-data" class="form-horizontal form-bordered" >
+    {% csrf_token %}
+    <!-- Input Grid Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Input Grid Block -->
+            <div class="block">
+                <!-- Input Grid Title -->
+                <div class="block-title">
+                    <h2>Edit basic information for the website {{site.name}} </h2>
+                </div>
+                <!-- END Input Grid Title -->
+
+                <!-- Input Grid Content -->
+                <form action="{%url 'site_settings' %}" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
+                    <div class="form-group row">
+                        <div class="col-md-8">
+                            Website Name
+                            <input type="text" class="form-control" id="name" name="name" value="{{site.name}}" placeholder="Website name">
+                            
+                        </div>
+                        <div class="col-md-4">
+                            Contact Number
+                            <input type="text" class="form-control" id="tell" name="tell" value="{{site.tell}}" placeholder="Contact Number">
+                            
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            Facebook Link
+                            <input type="text" class="form-control" id="fb" name="fb" value="{{site.fb}}" placeholder="Facebook Link">
+                            
+                        </div>
+                        <div class="col-md-4">
+                            Youtube Link
+                            <input type="text" class="form-control" id="yt" name="yt" value= "{{site.yt}}" placeholder="Youtube Link">
+                            
+                        </div>
+                        <div class="col-md-4">
+                            Twitter Link
+                            <input type="text" class="form-control" id="tw" name="tw" value="{{site.tw}}" placeholder=" Twitter Link">
+                           
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        About the Website
+                        <div class="col-md-12">                            
+                            <textarea input type="text" class="form-control" id="about" name="about"  placeholder="About the Website">
+                                {{site.about}}
+                            </textarea>    
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <input type="file" id="myFile" name="myFile" class="form-control file-selector-button"  placeholder="Body txt">
+                        </div>
+
+                        <div class="col-md-9 row">
+                        
+                            <img style="display: inline-block; width:200px; height:100px;" src="{{site.favpicurl}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group form-actions">
+                        <div class="col-xs-12">
+                            <button type="submit" class="btn btn-sm btn-success">Submit</button>
+                            <button type="button" onClick="refreshPage()" class="btn btn-sm btn-primary">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Input Grid Content -->
+            </div>
+            <!-- END Input Grid Block -->
+        </div>
+        
+    </div>
+    <!-- END Input Grid Row -->
+    
+   
+ 
+  
+</form>
+{% endblock mainblock %}
+
+{% block scriptblock %}
+ <!-- Tiny Editor-->
+ <script>
+    tinymce.init({
+      selector: 'textarea',
+      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Author name',
+      mergetags_list: [
+        { value: 'First.Name', title: 'First Name' },
+        { value: 'Email', title: 'Email' },
+      ]
+    });
+  </script>
+  <!--Refesh page-->
+  <script>
+    function refreshPage(){
+        window.location.reload();
+    } 
+    </script>
+
+<script src="js/vendor/jquery.min.js"></script>
+        <script src="{% static 'back/assets/js/vendor/bootstrap.min.js' %}" ></script>
+        <script src="{% static 'back/assets/js/plugins.js' %}"></script>
+        <script src="{% static 'back/assets/js/app.js' %}"></script>
+{% endblock scriptblock %}

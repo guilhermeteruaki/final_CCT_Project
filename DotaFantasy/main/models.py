@@ -14,7 +14,8 @@ class Main(models.Model):
     yt = models.CharField(default="-",max_length=30)
     tell = models.CharField(default="-",max_length=30)
     link = models.CharField(default="-",max_length=30)
-
+    favpicname = models.TextField(default="")
+    favpicurl = models.TextField(default="")
     
     def __str__ (self):
         return (self.name + "|" + str(self.pk))

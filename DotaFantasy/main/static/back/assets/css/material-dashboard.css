@@ -496,10 +496,7 @@ legend+* {
   padding: 0;
 }
 
-::file-selector-button {
-  font: inherit;
-  -webkit-appearance: button;
-}
+
 
 output {
   display: inline-block;
@@ -1390,6 +1387,10 @@ progress {
   .col-md-6 {
     flex: 0 0 auto;
     width: 50%;
+  }
+
+  .form-field {
+    border-style: solid;
   }
 
   .col-md-7 {
@@ -2719,6 +2720,9 @@ progress {
   margin-top: 0.25rem;
   font-size: 0.875em;
   color: #6c757d;
+}
+.form-bordered {
+  border-style: solid;
 }
 
 .form-control {
@@ -27706,4 +27710,12 @@ pre[class*="language-"] {
   }
 }
 
+.file-selector-button {
+  font-weight: bold;
+  color: dodgerblue;
+  padding: 0.5em;
+  border: thin solid grey;
+  border-radius: 3px;
+
+}
 /*# sourceMappingURL=dashboard-free.css.map */
