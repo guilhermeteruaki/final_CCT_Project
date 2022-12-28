@@ -21,7 +21,7 @@
                                     <div class="row d_flex">
                                         <div class="col-md-6">
                                             <div class="con_img">
-                                                <figure><img class="img_responsive" src="{% static 'front/images/top_img.png' %}" alt="#" /></figure>
+                                                <figure><img class="img_responsive" src="{{site.favpicurl}}" alt="#" /></figure>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -100,7 +100,7 @@
             <div class="col-lg-3 col-sm-6">
                 <div id="wa_hover" class="wallet_box text_align_center">
                     <i><img src="{% static 'front/images/wa1.svg' %}" alt="#"/></i>
-                    <h3>ONLINE WALLET</h3>
+                    <h3>ONLINE WALLET TODO</h3>
                     <p>It is a long established fact that a reader will be distracted by </p>
                 </div>
             </div>
@@ -142,13 +142,13 @@
                                 <h2>About Us</h2>
                             </div>
                             <div class="about_text">
-                                <p>It is a long established fact that a reader will be distracted bIt is a long established fact that a reader will be distracted by y It is a long established fact that a reader will be distracted by It is a long established fact that a reader will be distracted by </p>
-                                <a class="read_more" href="about.html">Read More</a>
+                                {{site.about|safe}}
+                                <!--<a class="read_more" href="/">Read More</a>-->
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="about_img">
-                                <figure><img class="img_responsive" src="{% static 'front/images/about2.png' %}" alt="#" /></figure>
+                                <figure><img class="img_responsive" src="{{site.favpicurl}}" alt="#" /></figure>
                             </div>
                         </div>
                     </div>
@@ -165,7 +165,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="titlepage text_align_center">
-                    <h2>How It Works</h2>
+                    <h2>How It Works TODO</h2>
                 </div>
             </div>
         </div>

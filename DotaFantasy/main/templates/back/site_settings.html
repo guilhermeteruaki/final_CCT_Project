@@ -29,7 +29,7 @@
 <form action="" method="post" enctype="multipart/form-data" class="form-horizontal form-bordered" >
     {% csrf_token %}
     <!-- Input Grid Row -->
-    <div class="row">
+    <div class="row" boarder-style = None>
         <div class="col-md-12">
             <!-- Input Grid Block -->
             <div class="block">
@@ -81,12 +81,19 @@
 
                     <div class="form-group row">
                         <div class="col-md-3">
-                            <input type="file" id="myFile" name="myFile" class="form-control file-selector-button"  placeholder="Body txt">
+                            <input type="file" id="myFile" name="myFile" class="form-control file-selector-button"  placeholder=" Body txt">
                         </div>
-
-                        <div class="col-md-9 row">
-                        
-                            <img style="display: inline-block; width:200px; height:100px;" src="{{site.favpicurl}}">
+                        <div class=" col-md-8 block">
+                            <div class=>
+                                <div class="col-xs-4">
+                                <img style="display: inline-block; width:72px; height:72px;" src="{{site.favpicurl}}">
+                                </div>
+                            </div>
+                            <div class=>
+                                <div class="col-xs-8">
+                                <p>Site Favorite Icon (The one that shows in the browser tab)</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

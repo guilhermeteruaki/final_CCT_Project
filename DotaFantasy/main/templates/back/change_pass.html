@@ -1,0 +1,81 @@
+{% extends 'back/Admintemplate.html' %}
+{% load static %}
+
+{% block headblock %}
+<title>{{site.name}} | ControlPanel </title>
+{% endblock headblock %}
+
+{% block mainblock %}
+<form action="" method="post" enctype="multipart/form-data" class="form-horizontal form-bordered" >
+    {% csrf_token %}
+    <!-- Input Grid Row -->
+    <div class="row" boarder-style = None>
+        <div class="col-md-12">
+            <!-- Input Grid Block -->
+            <div class="block">
+                <!-- Input Grid Title -->
+                <div class="block-title">
+                    <h4>Change Password for  {{request.user.username}} </h4>
+                </div>
+                <!-- END Input Grid Title -->
+
+                <!-- Input Grid Content -->
+                <form action="{%url 'site_settings' %}" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
+                    <div class="form-group row">
+                        <div class="col-md-8">
+                            <p> Please use:
+                                - at least 8 digits
+                                - Captal and lowercase Letters
+                                - Numbers
+                                -Special Characters (!@#$%^&*()-+?_=,<>/)
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-8">
+                            New Password
+                            <input type="password" class="form-control" id="newPass" name="newPass" placeholder="New Password">
+                            
+                        </div>
+                        <div class="col-md-4">
+                            Retype New Password
+                            <input type="password" class="form-control" id="newPass2" name="newPass2"  placeholder="New Password">
+                            
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-4">
+                            Old Password
+                            <input type="password" class="form-control" id="oldPass" name="oldPass" placeholder="Old Password">
+                            
+                        </div>
+                        <div class="col-xs-8">
+                            <button type="submit" class="btn btn-sm btn-success">Submit</button>
+                            <button type="button" onClick="refreshPage()" class="btn btn-sm btn-primary">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Input Grid Content -->
+            </div>
+            <!-- END Input Grid Block -->
+        </div>
+        
+    </div>
+    <!-- END Input Grid Row -->
+    
+   
+ 
+  
+</form>
+{% endblock mainblock %}
+
+{% block scriptblock %}
+<!-- refreshPage script-->
+<script>
+    function refreshPage(){
+        window.location.reload();
+    } 
+</script>
+
+{% endblock scriptblock %}
+     
