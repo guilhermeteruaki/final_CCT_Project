@@ -3,6 +3,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
+from users import views
+from .models import Main
+from users.models import UserInfo
+
 
 #views are how the site behaves
 
@@ -23,7 +27,7 @@ def panel(request):
         return redirect(sign_in)
     #end login        
     site = Main.objects.get(pk=3)
-    user = AuthUser.objects.filter()
+    user = "#"
     return render(request, 'back/controlPanel.html', {'site':site, 'user':user})
 
 def sign_in(request):
@@ -204,7 +208,7 @@ def sign_up(request):
         bday = request.POST.get('bday')
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
-        print (fname, lname,uname, email,bday, password, password2)
+        
         if fname == "" or lname == "":
             error = "Input Your Name"
             return render(request, 'back/error.html' , {'error':error})
@@ -251,7 +255,11 @@ def sign_up(request):
 
         if count1 == 1 and count2 == 1 and count3 == 1 and count4 == 1 and len(User.objects.filter(username=uname)) == 0 and len(User.objects.filter(email=email)) == 0 :
             user = User.objects.create_user(username=uname,email=email,password=password)
-            
+            user.refresh_from_db()
+            userInfo = UserInfo(id=user)
+            userInfo.birth_day=bday
+            userInfo.save()
+            return redirect(sign_in)
 
 
     return render(request, 'back/sign-up.html')
