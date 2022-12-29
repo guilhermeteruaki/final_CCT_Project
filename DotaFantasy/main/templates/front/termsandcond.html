@@ -1,0 +1,33 @@
+{% extends 'front/basicTemplate.html' %}
+{% load static %}
+
+{% block mainblock %}
+
+<div id="about" class="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="about_border">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="titlepage text_align_left">
+                                <h2>Our Terms and Conditions</h2>
+                            </div>
+                            <div class="about_text">
+                                {{msg}}
+                                <!--<a class="read_more" href="/">Read More</a>-->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="about_img">
+                                <figure><img class="img_responsive" src="{{site.favpicurl}}" alt="#" /></figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock mainblock %}

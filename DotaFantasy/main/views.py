@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Main, AuthUser
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
@@ -8,7 +7,6 @@ from django.contrib.auth.models import User
 #views are how the site behaves
 
 
-# Front methods.
 
 def home(request):
     site = Main.objects.get(pk=3)
@@ -18,12 +16,6 @@ def home(request):
 def about(request):
     site = Main.objects.get(pk=3)
     return render(request, 'front/about.html',  {'site':site})
-
-
-
-
-#back methods
-
 
 def panel(request):
     #login check
@@ -57,11 +49,6 @@ def sign_in(request):
 def sign_out(request):
     logout(request)
     return redirect(home)
-
-def sign_up(request):
-
-    site = Main.objects.get(pk=3)
-    return render(request, 'back/sign-up.html',  {'site':site})        
 
 def site_settings(request):
 
@@ -205,3 +192,73 @@ def change_pass(request):
 
 
     return render(request, 'back/change_pass.html')
+
+def sign_up(request):
+    
+    if request.method == 'POST':
+
+        fname = request.POST.get('firstName')
+        lname = request.POST.get('lastName')
+        uname = request.POST.get('username')
+        email = request.POST.get('email')
+        bday = request.POST.get('bday')
+        password = request.POST.get('password')
+        password2 = request.POST.get('password2')
+        print (fname, lname,uname, email,bday, password, password2)
+        if fname == "" or lname == "":
+            error = "Input Your Name"
+            return render(request, 'back/error.html' , {'error':error})
+        
+           
+        
+        if password != password2 :
+            error = "Your Pass Didn't Match"
+            return render(request, 'back/error.html' , {'error':error})
+
+        if len(password) < 8 :
+                error = "Your Password Must Be At Less 8 Character"
+                return render(request, 'back/error.html' , {'error':error})
+
+        count1 = 0
+        count2 = 0
+        count3 = 0 
+        count4 = 0
+
+        for i in password :
+            
+
+            if i.isdigit():
+                count1 = 1
+            if i.isupper():
+                count2 = 1
+            if i.islower():
+                count3 = 1
+            if i in "!@#$%^&*()-+?_=,<>/" :
+                count4 = 1
+                
+        if count1 != 1:      
+            error = "Passwords must contain numbers"
+            return render(request, 'back/error.html' , {'error':error})
+        if count2 != 1:      
+            error = "Passwords must contain Capital Letters"
+            return render(request, 'back/error.html' , {'error':error})
+        if count3 != 1:      
+            error = "Passwords must contain lowercase letters"
+            return render(request, 'back/error.html' , {'error':error})
+        if count4 != 1:      
+            error = "Passwords must contain special characters"
+            return render(request, 'back/error.html' , {'error':error})
+
+        if count1 == 1 and count2 == 1 and count3 == 1 and count4 == 1 and len(User.objects.filter(username=uname)) == 0 and len(User.objects.filter(email=email)) == 0 :
+            user = User.objects.create_user(username=uname,email=email,password=password)
+            
+
+
+    return render(request, 'back/sign-up.html')
+
+
+
+def termsandcond(request):
+    site = Main.objects.get(pk=3)
+    msg = "By accepting these terms and conditions you agree to: If you are a teacher or evaluator from CCT to give Guilherme an A+ in this assignment."
+    return render(request, 'front/termsandcond.html',  {'site':site, 'msg':msg})

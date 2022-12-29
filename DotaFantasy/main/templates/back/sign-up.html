@@ -20,10 +20,8 @@
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-      <link rel="icon" type="image/png" href="{% static 'back/assets/img/favicon.png' %}">
-      <title>
-        Material Dashboard 2 by Creative Tim
-      </title>
+      <link rel="icon" type="image/png" href="{{site.favpicurl}}">
+      <title>{{site.name}} | Sign up </title>
       <!--     Fonts and icons     -->
       <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
       <!-- Nucleo Icons -->
@@ -59,32 +57,132 @@
                   <div class="card card-plain">
                     <div class="card-header">
                       <h4 class="font-weight-bolder">Sign Up</h4>
-                      <p class="mb-0">Enter your email and password to register</p>
+                      <p class="mb-0">Enter your email, birthday and password to register</p>
                     </div>
                     <div class="card-body">
-                      <form role="form">
-                        <div class="input-group input-group-outline mb-3">
-                          <label class="form-label">Name</label>
-                          <input type="text" class="form-control">
+                      <form action="" method="post" enctype="multipart/form-data" class="form-horizontal form-bordered" >
+                        {% csrf_token %}
+                        <!-- Input Grid Row -->
+                        <div class="row" boarder-style = None>
+                            <div class="col-md-12">
+                                <!-- Input Grid Block -->
+                                <div class="block">
+                                    <!-- Input Grid Content -->
+                                    <form action="{%url 'sign-up' %}" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                First Name
+                                                <input type="text" class="form-control" id="fname" name="fname" placeholder="First name" required>
+                                                
+                                            </div>
+                                            <div class="col-md-6">
+                                                Last Name
+                                                <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" required>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                          <div class="col-md-12">
+                                              username
+                                              <input type="username" class="form-control" id="username" name="username" placeholder="username" required>
+                                          </div>
+                                        </div>
+                                        <div class="form-group row">
+                                          <div class="col-md-12">
+                                              email
+                                              <input type="email" class="form-control" id="email" name="email" placeholder="email" required>
+                                          </div>
+                                        </div>
+                                        <div class="form-group row">
+                                          <div class="col-md-12">
+                                              Birthday
+                                              <input type="date" class="form-control" id="bday" name="bday" placeholder="Birthday" required>
+                                          </div>
+                                        </div>
+                                        <div class="form-group row">
+                                          <div class="col-md-6">
+                                              password
+                                              <input type="password" class="form-control" id="password" name="password" placeholder="password" required>
+                                          </div>
+                                          <div class="col-md-6">
+                                            password
+                                            <input type="password" class="form-control" id="password2" name="password2" placeholder="password" required>
+                                          </div>
+                                        </div>
+                                        <div class="form-group form-actions">
+                                            <div class="col-xs-12">
+                                                <button type="submit" class="btn btn-sm btn-success">Submit</button>
+                                                <button type="button" onClick="refreshPage()" class="btn btn-sm btn-primary">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <!-- END Input Grid Content -->
+                                </div>
+                                <!-- END Input Grid Block -->
+                            </div>
+                            
+                        </div>
+                        <!-- END Input Grid Row -->
+                        
+                       
+                     
+                      
+                    </form>
+                      <!--
+                      <form action="{%url 'sign-up' %}" method="post" class="form-horizontal " onsubmit="return false;" >
+                        {% csrf_token %}
+                        <div class ="row">
+                          <div class="col-md-6">
+                            <div class="input-group input-group-outline mb-3 ">
+                              <label class="form-label"id= "firstName" name="firstName"></label>
+                              <input type="text" class="form-control" placeholder ="First Name" required>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label" id= "lastName" name="lastName"></label>
+                                <input type="text" class="form-control" placeholder ="Last Name" required>
+                            </div>
+                          </div>
                         </div>
                         <div class="input-group input-group-outline mb-3">
-                          <label class="form-label">Email</label>
-                          <input type="email" class="form-control">
+                          <label class="form-label"id= "username" name="username"></label>
+                          <input type="username" class="form-control" placeholder ="username" required>
                         </div>
                         <div class="input-group input-group-outline mb-3">
-                          <label class="form-label">Password</label>
-                          <input type="password" class="form-control">
+                          <label class="form-label"id= "email" name="email"></label>
+                          <input type="email" class="form-control" placeholder ="Email" required>
+                        </div>
+                        <div class="input-group input-group-outline mb-3">
+                          <label class="form-label"id= "bday" name="bday" ></label>
+                          <input type="date" class="form-control" placeholder="birthday" required>
+                        </div>
+                        <div class ="row">
+                          <div class="col-md-6">
+                            <div class="input-group input-group-outline mb-3">
+                              <label class="form-label"id= "password" name="password" ></label>
+                              <input type="password" class="form-control" placeholder ="Password" required>
+                            </div>
+                          </div>  
+                          <div class="col-md-6">
+                            <div class="input-group input-group-outline mb-3">
+                              <label class="form-label"id= "password2" name="password2" ></label>
+                              <input type="password" class="form-control" placeholder ="Password" required>
+                            </div>
+                          </div>
                         </div>
                         <div class="form-check form-check-info text-start ps-0">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" >
                           <label class="form-check-label" for="flexCheckDefault">
-                            I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                            I agree the <a href={% url 'termsandcond' %}class="text-dark font-weight-bolder">Terms and Conditions</a>
                           </label>
                         </div>
-                        <div class="text-center">
-                          <button type="button" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign Up</button>
+                        <div class="text-center form-group form-actions">
+                          <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign Up</button>
+                          <button type="submit" class="btn btn-sm btn-success">Submit</button>
                         </div>
                       </form>
+                    -->
                     </div>
                     <div class="card-footer text-center pt-0 px-lg-2 px-1">
                       <p class="mb-2 text-sm mx-auto">
