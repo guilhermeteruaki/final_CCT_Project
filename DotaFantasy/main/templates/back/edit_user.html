@@ -9,20 +9,20 @@
 
 <link rel="stylesheet" href="{% static 'back/assets/css/bootstrap.min.css' %}">
 
-        <!-- Related styles of various icon packs and plugins -->
-        <link rel="stylesheet" href="{% static 'back/assets/css/plugins.css' %}">
+<!-- Related styles of various icon packs and plugins -->
+<link rel="stylesheet" href="{% static 'back/assets/css/plugins.css' %}">
 
-        <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
-        <link rel="stylesheet" href="{% static 'back/assets/css/main.css' %}">
+<!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+<link rel="stylesheet" href="{% static 'back/assets/css/main.css' %}">
 
-        <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
+<!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
 
-        <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
-        <link rel="stylesheet" href="{% static 'back/assets/css/themes.css' %}">
-        <!-- END Stylesheets -->
+<!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
+<link rel="stylesheet" href="{% static 'back/assets/css/themes.css' %}">
+<!-- END Stylesheets -->
 
-        <!-- Modernizr (browser feature detection library) -->
-        <script src="{% static 'back/assets/js/vendor/modernizr.min.js' %}"></script>
+<!-- Modernizr (browser feature detection library) -->
+<script src="{% static 'back/assets/js/vendor/modernizr.min.js' %}"></script>
 {% endblock headblock %}
 
 {% block mainblock %}
@@ -70,13 +70,27 @@
                             
                         </div>
                         <div class="col-md-4">
-                            Birthday
+                            Birthday (MUST BE YYYY-MM-DD format)
                             <input type="datetime" class="form-control" id="bday" name="bday" value="{{userinfo.bday}}" placeholder="" required>
                             
                         </div>
                     </div>
+                    <div class=" justify-content-end row">
+                        <div class="form-group col-md-4 " >
+                            Groups
+                            <select id="group" name="group" class="select-chosen" data-placeholder="Choose a group to add" style="width: 250px;">
+                                           
+                                {% for g in userinfo.group%}
+                                <option value="{{g.name}}">{{g.name}}</option>
+                                {% endfor %}
+                               
+                               
+                            </select>
+                        </div>
+                        
+                    </div>
                     
-
+                    <br/>
                    
 
                     <div class="form-group form-actions">

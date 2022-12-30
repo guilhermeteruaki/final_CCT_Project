@@ -29,6 +29,7 @@
   {% block headblock %}
   {% endblock headblock %}
 
+  <link rel="stylesheet" href="{% static 'back/assets/css/bootstrap.min.css' %}">
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   <!-- Nucleo Icons -->
@@ -262,6 +263,7 @@
 {% block scriptblock %}
 {% endblock scriptblock %}
   <!--   Core JS Files   -->
+  <script src="{% static 'back/assets/js/vendor/jquery.min.js' %}"></script>
   <script src="{% static 'back/assets/js/core/popper.min.js' %}"></script>
   <script src="{% static 'back/assets/js/core/bootstrap.min.js' %}"></script>
   <script src="{% static 'back/assets/js/plugins/perfect-scrollbar.min.js' %}"></script>

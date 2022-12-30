@@ -10,4 +10,5 @@ urlpatterns = [
     re_path(r'^panel/users_groups/del/(?P<name>.*)/$', views.delete_group, name='delete_group'),
     re_path(r'^panel/users_list/user_details/(?P<pk>.\d+)/$', views.user_details, name='user_details'),
     re_path(r'^panel/users_list/edit_user/(?P<pk>.\d+)/$', views.edit_user, name='edit_user'),
+    re_path(r'^panel/users_groups/group_members/(?P<name>.*)/$', views.group_members, name='group_members'),
 ]

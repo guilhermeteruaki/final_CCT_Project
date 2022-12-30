@@ -12,7 +12,7 @@
    <div class="content-header">
     <div class="header-section">
         <h5>
-            <i class="fa fa-table"></i>Users List<br><small> See all users of the website</small>
+            <i class="fa fa-table"></i> List of group members<br><small> See all users of the group</small>
         </h5>
     </div>
 </div>
@@ -24,7 +24,7 @@
   <!-- Datatables Content -->
   <div class="block full">
     <div class="block-title">
-        <h2><strong>Users</strong> List</h2>
+        <h2>Members of the group <strong>{{name}}</strong></h2>
     </div>
    
     <div class="table-responsive">
@@ -32,9 +32,7 @@
             <thead>
                 <tr>
                     <th class="text-center">ID</th>
-                    <th>Email</th>
                     <th>Username</th>
-                    <th>Group</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -43,7 +41,6 @@
                
                 <tr>
                     <td class="text-center ">{{u.pk}}</td>
-                    <td>{{u.email}}</td>
                     <td>{{u.uname}}</td>
                     <td>TODO</td>
                     <td class="text-center">

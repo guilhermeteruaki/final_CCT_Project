@@ -115,8 +115,9 @@ def user_details(request,pk):
         email = u.id.email
         bday = u.birth_day
         uname = u.id.username
+        group = u.id.groups.all()
 
-        userinfo={"pk":pk, "bday":bday, "fname":fname, "lname":lname, "mname":mname, "email":email, "uname":uname}
+        userinfo={"pk":pk, "bday":bday, "fname":fname, "lname":lname, "mname":mname, "email":email, "uname":uname, "group":group}
         
    
    
@@ -138,8 +139,9 @@ def edit_user(request,pk):
         email = u.id.email
         bday = u.birth_day
         uname = u.id.username
+        group = Group.objects.all()
 
-        userinfo={"pk":pk, "bday":bday, "fname":fname, "lname":lname, "mname":mname, "email":email, "uname":uname}
+        userinfo={"pk":pk, "bday":bday, "fname":fname, "lname":lname, "mname":mname, "email":email, "uname":uname, "group":group}
 
     
 
@@ -164,6 +166,8 @@ def edit_user(request,pk):
         uname = request.POST.get('uname')
         email = request.POST.get('email')
         bday = request.POST.get('bday')
+        gname = request.POST.get("group")
+
 
         
         if fname == "" or lname == "" or bday == "" or uname == "" or email == "" :
@@ -171,7 +175,7 @@ def edit_user(request,pk):
             return render(request, 'back/error.html' , {'error':error})
 
         
-        
+        group = Group.objects.get(name=gname)
         u.first_name = fname
         u.last_name = lname
         if mname != "": uinfo.midle_name = mname
@@ -179,6 +183,7 @@ def edit_user(request,pk):
         u.username = uname
         u.email = email
         uinfo.birth_day = bday
+        u.groups.add(group)
         u.save()
         uinfo.save()
 
@@ -187,5 +192,11 @@ def edit_user(request,pk):
     return render(request, 'back/edit_user.html', {"site":site, "userinfo":userinfo})
 
 
+def group_members(request, name):
+    site = Main.objects.get(pk=3)
+    return render(request, 'back/group_members.html', {"site":site, "name":name})
+
+
+    
 
 

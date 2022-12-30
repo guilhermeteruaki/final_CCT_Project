@@ -67,7 +67,7 @@
                         <td class="text-center">
                             <div class="btn-group">
                                 
-                                <a href="" data-toggle="tooltip" title="Groups" class="btn btn-xs btn-default"><i class="fa fa-pencil"> Groups</i></a>
+                                <a href="{%url 'group_members' name=g.name %}" data-toggle="tooltip" title="Groups" class="btn btn-xs btn-default"><i class="fa fa-pencil"> Groups members</i></a>
                                 <a href="{%url 'delete_group' name=g.name %}" data-toggle="tooltip" title="Delete" onclick="return confirm('Do you really want to delete the group?');"class="btn btn-xs btn-danger"><i class="fa fa-times"> Delete</i></a>
                                 <a href="" data-toggle="tooltip" title="Groups" class="btn btn-xs btn-default"><i class="fa fa-pencil"> Perms</i></a>
                             </div>
