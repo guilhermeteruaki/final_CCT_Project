@@ -27,26 +27,28 @@
         <h2><strong>Users</strong> List</h2>
     </div>
    
-    <div class="table-responsive">
+    <div class="container-fluid">
         <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
             <thead>
-                <tr>
-                    <th class="text-center">ID</th>
-                    <th>Email</th>
-                    <th>Username</th>
-                    <th>Group</th>
-                    <th class="text-center">Actions</th>
+                <tr class="d-flex">
+                    <th class="text-center col-1">ID</th>
+                    <th  class="col-2">Email</th>
+                    <th class="col-3">Username</th>
+                    <th class="col-3">Group</th>
+                    <th class="col-4">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for u in ulist %}
                
-                <tr>
-                    <td class="text-center ">{{u.pk}}</td>
-                    <td>{{u.email}}</td>
-                    <td>{{u.uname}}</td>
-                    <td>TODO</td>
-                    <td class="text-center">
+                <tr class="d-flex">
+                    <td class="text-center col-1">{{u.pk}}</td>
+                    <td class="col-2">{{u.email}}</td>
+                    <td class="col-3">{{u.uname}}</td>
+                    <td class="col-4">
+                        <p> {{u.ugroup|join:", "}}</p>
+                    </td>
+                    <td class=" d-flex col-4">
                         <div class="btn-group">
                             
                             <a href="{% url 'user_details' pk=u.pk %}" data-toggle="tooltip" title="Groups" class="btn "><i class="fa fa-pencil"> User Details</i></a>

@@ -1,6 +1,10 @@
 {% extends 'back/Admintemplate.html' %}
 {% load static %}
 
+{% block headblock %}
+<title>{{site.name}} | Error Page </title>
+{% endblock headblock %}
+
 {% block mainblock %}
 <h4>
 {{error}}

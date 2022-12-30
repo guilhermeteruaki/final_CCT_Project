@@ -12,6 +12,18 @@ def userinfo(request):
     if not request.user.is_authenticated :
         return redirect(sign_in)
     # login check end
+    accesslvl =1
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+        
+
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+        
+
     return render(request, 'middle/userpage.html')
 
 def users_list(request):
@@ -19,6 +31,17 @@ def users_list(request):
     if not request.user.is_authenticated :
         return redirect(sign_in)
     # login check end
+    accesslvl =1
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+        
+
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+        
 
     site = Main.objects.get(pk=3)
     users = UserInfo.objects.all()
@@ -32,18 +55,29 @@ def users_list(request):
         email = u.id.email
         bday = u.birth_day
         uname = u.id.username
+        ugroup = u.id.groups.all()
 
-        userinfo={"pk":pk, "fname":fname, "lname":lname, "mname":mname, "email":email,"bday":bday, "uname":uname}
+        userinfo={"pk":pk, "fname":fname, "lname":lname, "mname":mname, "email":email,"bday":bday, "uname":uname, "ugroup":ugroup}
         ulist.append(userinfo)
-    
+        print(ulist)
     return render(request, 'back/users_list.html',  {"site":site, 'ulist':ulist})
 
 def delete_user(request,pk):
-
     # login check start
     if not request.user.is_authenticated :
         return redirect(sign_in)
     # login check end
+    accesslvl =1
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+        
+
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+        
 
     email = UserInfo.objects.get(pk=pk).id.email
     b = User.objects.filter(email=email)
@@ -57,10 +91,23 @@ def users_groups(request):
     if not request.user.is_authenticated :
         return redirect(sign_in)
     # login check end
+    accesslvl =1
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+        
+
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+        
+
+   
 
     site = Main.objects.get(pk=3)
 
-    group = Group.objects.all()
+    group = Group.objects.all().exclude(name="masteruser")
 
     return render(request, 'back/users_groups.html', {"site":site, "group":group})
 
@@ -69,6 +116,17 @@ def new_group(request):
     if not request.user.is_authenticated :
         return redirect(sign_in)
     # login check end
+    accesslvl =1
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+        
+
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+        
 
 
     if request.method=="POST":
@@ -86,23 +144,43 @@ def new_group(request):
     return redirect(users_groups)
 
 def delete_group(request, name):
-
     # login check start
     if not request.user.is_authenticated :
         return redirect(sign_in)
     # login check end
+    accesslvl =1
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+        
 
-    b = Group.objects.filter(name=name)
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+        
+
+    b = Group.objects.filter(name=name).exclude(name="masteruser")
     b.delete()
     
     return redirect(users_groups)
 
 def user_details(request,pk):
-
     # login check start
     if not request.user.is_authenticated :
         return redirect(sign_in)
     # login check end
+    accesslvl =1
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+        
+
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+        
 
     site = Main.objects.get(pk=3)
     users = UserInfo.objects.filter(pk=pk)
@@ -124,6 +202,22 @@ def user_details(request,pk):
     return render(request, 'back/user_details.html', {"site":site, 'userinfo':userinfo})
 
 def edit_user(request,pk):
+    # login check start
+    if not request.user.is_authenticated :
+        return redirect(sign_in)
+    # login check end
+    accesslvl =10
+    perm = 10000
+    for i in request.user.groups.all():
+        if i.name == "masteruser":perm = 1
+        if i.name == "superadmin":perm = 10
+        if i.name == "admin":perm = 100
+        if i.name == "user":perm = 1000
+
+    if perm >accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+
     site = Main.objects.get(pk=3)
     
 
@@ -139,9 +233,10 @@ def edit_user(request,pk):
         email = u.id.email
         bday = u.birth_day
         uname = u.id.username
-        group = Group.objects.all()
+        ugroup = u.id.groups.all()
+        group = Group.objects.all().exclude(name="masteruser")
 
-        userinfo={"pk":pk, "bday":bday, "fname":fname, "lname":lname, "mname":mname, "email":email, "uname":uname, "group":group}
+        userinfo={"pk":pk, "bday":bday, "fname":fname, "lname":lname, "mname":mname, "email":email, "uname":uname,"ugroup":ugroup, "group":group}
 
     
 
@@ -191,12 +286,47 @@ def edit_user(request,pk):
 
     return render(request, 'back/edit_user.html', {"site":site, "userinfo":userinfo})
 
-
 def group_members(request, name):
+    # login check start
+    if not request.user.is_authenticated :
+        return redirect(sign_in)
+    # login check end
+    accesslvl =1
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+        
+
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+        
+        
     site = Main.objects.get(pk=3)
     return render(request, 'back/group_members.html', {"site":site, "name":name})
 
+def remove_user_from_group(request, pk, gname):
+    # login check start
+    if not request.user.is_authenticated :
+        return redirect(sign_in)
+    # login check end
+    accesslvl =1
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+        
 
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+        
+        
+    group = Group.objects.get(name=gname)
+    user = User.objects.get(pk=pk)
+    user.groups.remove(group)
     
+    return redirect(user_details, pk)    
 
 

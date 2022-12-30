@@ -34,9 +34,17 @@
             <!-- Input Grid Block -->
             <div class="block">
                 <!-- Input Grid Title -->
-                <div class="block-title">
-                    <h2>Edit user  <strong>{{userinfo.uname}}</strong> information</h2>
-                </div>
+                <div class="block-title row">
+                    <div class=" col-md-8">
+                        <h2>Edit user  <strong>{{userinfo.uname}}</strong> information</h2>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-sm btn-success"onclick="return confirm('Do you really want to update user information?');" >Submit</button>
+                            <a href="{% url 'user_details' pk=userinfo.pk %}" data-toggle="tooltip" title="Groups" class="btn btn-sm btn-danger "><i class="fa fa-pencil"> Cancel</i></a>
+                        </div>
+                    </div>
+                </div>    
                 <!-- END Input Grid Title -->
 
                 <!-- Input Grid Content -->
@@ -75,9 +83,24 @@
                             
                         </div>
                     </div>
+                    <div class="row">
+                        Groups
+                        <div class=" block">
+                            {% for g in userinfo.ugroup %}
+                                <div class="col-xs-6">
+                                    <p>{{g.name}}</p>
+                                </div>
+                                <div class="col-xs-6">
+                                    <a href="{% url 'remove_user_from_group' pk=userinfo.pk gname=g.name %}" data-toggle="tooltip" title="Groups" class="btn btn-sm btn-warning "><i class="fa fa-pencil"> Remove group</i></a>
+                                
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                     <div class=" justify-content-end row">
+                        
                         <div class="form-group col-md-4 " >
-                            Groups
+                            Add a Groups
                             <select id="group" name="group" class="select-chosen" data-placeholder="Choose a group to add" style="width: 250px;">
                                            
                                 {% for g in userinfo.group%}
@@ -93,12 +116,7 @@
                     <br/>
                    
 
-                    <div class="form-group form-actions">
-                        <div class="col-xs-12">
-                            <button type="submit" class="btn btn-sm btn-success"onclick="return confirm('Do you really want to update user information?');" >Submit</button>
-                            <a href="{% url 'user_details' pk=userinfo.pk %}" data-toggle="tooltip" title="Groups" class="btn btn-sm btn-danger "><i class="fa fa-pencil"> Cancel</i></a>
-                        </div>
-                    </div>
+                    
                 </form>
                 <!-- END Input Grid Content -->
             </div>
