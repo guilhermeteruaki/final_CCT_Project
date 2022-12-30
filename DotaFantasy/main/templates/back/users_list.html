@@ -1,0 +1,68 @@
+{% extends 'back/Admintemplate.html' %}
+{% load static %}
+
+{% block headblock %}
+<title>{{site.name}} | Users List </title>
+{% endblock headblock %}
+
+{% block mainblock %}
+
+
+   <!-- Datatables Header -->
+   <div class="content-header">
+    <div class="header-section">
+        <h5>
+            <i class="fa fa-table"></i>Users List<br><small> See all users of the website</small>
+        </h5>
+    </div>
+</div>
+
+<!-- END Datatables Header -->
+
+
+
+  <!-- Datatables Content -->
+  <div class="block full">
+    <div class="block-title">
+        <h2><strong>Users</strong> List</h2>
+    </div>
+   
+    <div class="table-responsive">
+        <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Group</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in ulist %}
+               
+                <tr>
+                    <td class="text-center">{{u.pk}}</td>
+                    <td>{{u.email}}</td>
+                    <td>{{u.uname}}</td>
+                    <td>TODO</td>
+                    <td class="text-center">
+                        <div class="btn-group">
+                            
+                            <a href="{% url 'user_details' pk=u.pk %}" data-toggle="tooltip" title="Groups" class="btn "><i class="fa fa-pencil"> User Details</i></a>
+                            <a href="{%url 'delete_user' pk=u.pk %}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger" onclick="return confirm('Do you really want to delete the user?');"><i class="fa fa-times" > Delete</i></a>
+                            
+                        </div>
+                    </td>
+                </tr>
+             
+               
+               {% endfor %}
+               
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- END Datatables Content -->
+
+{% endblock mainblock %}

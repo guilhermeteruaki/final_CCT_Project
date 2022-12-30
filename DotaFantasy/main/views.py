@@ -201,8 +201,8 @@ def sign_up(request):
     
     if request.method == 'POST':
 
-        fname = request.POST.get('firstName')
-        lname = request.POST.get('lastName')
+        fname = request.POST.get('fname')
+        lname = request.POST.get('lname')
         uname = request.POST.get('username')
         email = request.POST.get('email')
         bday = request.POST.get('bday')
@@ -255,7 +255,10 @@ def sign_up(request):
 
         if count1 == 1 and count2 == 1 and count3 == 1 and count4 == 1 and len(User.objects.filter(username=uname)) == 0 and len(User.objects.filter(email=email)) == 0 :
             user = User.objects.create_user(username=uname,email=email,password=password)
-            user.refresh_from_db()
+            print(fname,lname)
+            user.first_name=fname
+            user.last_name=lname
+            user.save()
             userInfo = UserInfo(id=user)
             userInfo.birth_day=bday
             userInfo.save()
@@ -264,9 +267,19 @@ def sign_up(request):
 
     return render(request, 'back/sign-up.html')
 
-
-
 def termsandcond(request):
     site = Main.objects.get(pk=3)
     msg = "By accepting these terms and conditions you agree to: If you are a teacher or evaluator from CCT to give Guilherme an A+ in this assignment."
     return render(request, 'front/termsandcond.html',  {'site':site, 'msg':msg})
+
+
+
+
+
+
+
+
+
+
+
+

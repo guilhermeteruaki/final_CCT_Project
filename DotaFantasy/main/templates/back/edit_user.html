@@ -1,0 +1,116 @@
+{% extends 'back/Admintemplate.html' %}
+{% load static %}
+
+{% block headblock %}
+
+<script src="https://cdn.tiny.cloud/1/0fudtnjuf75v2kp0dhp5ga1hzaoseujj520f553o1azfutxj/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<title>{{site.name}} | User Details </title>
+
+
+<link rel="stylesheet" href="{% static 'back/assets/css/bootstrap.min.css' %}">
+
+        <!-- Related styles of various icon packs and plugins -->
+        <link rel="stylesheet" href="{% static 'back/assets/css/plugins.css' %}">
+
+        <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+        <link rel="stylesheet" href="{% static 'back/assets/css/main.css' %}">
+
+        <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
+
+        <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
+        <link rel="stylesheet" href="{% static 'back/assets/css/themes.css' %}">
+        <!-- END Stylesheets -->
+
+        <!-- Modernizr (browser feature detection library) -->
+        <script src="{% static 'back/assets/js/vendor/modernizr.min.js' %}"></script>
+{% endblock headblock %}
+
+{% block mainblock %}
+<form  method="post" enctype="multipart/form-data" class="form-horizontal" >
+    {% csrf_token %}
+    <!-- Input Grid Row -->
+    <div class="row" boarder-style = None>
+        <div class="col-md-12">
+            <!-- Input Grid Block -->
+            <div class="block">
+                <!-- Input Grid Title -->
+                <div class="block-title">
+                    <h2>Edit user  <strong>{{userinfo.uname}}</strong> information</h2>
+                </div>
+                <!-- END Input Grid Title -->
+
+                <!-- Input Grid Content -->
+                <form action="{%url 'edit_user' pk=userinfo.pk %}" method="post" class="form-horizontal" onsubmit="return false;">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            First Name
+                            <input type="text" class="form-control" id="fname" name="fname" value="{{userinfo.fname}}" placeholder="" required>
+                            
+                        </div>
+                        <div class="col-md-4">
+                            Middle Name
+                            <input type="text" class="form-control" id="mname" name="mname" value="{{userinfo.mname}}" placeholder="">
+                            
+                        </div>
+                        <div class="col-md-4">
+                            Last Name
+                            <input type="text" class="form-control" id="lname" name="lname" value="{{userinfo.lname}}" placeholder="" required>
+                            
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            Username
+                            <input type="text" class="form-control" id="uname" name="uname" value="{{userinfo.uname}}" placeholder="" required>
+                            
+                        </div>
+                        <div class="col-md-4">
+                            Email
+                            <input type="email" class="form-control" id="email" name="email" value="{{userinfo.email}}" placeholder="" required>
+                            
+                        </div>
+                        <div class="col-md-4">
+                            Birthday
+                            <input type="datetime" class="form-control" id="bday" name="bday" value="{{userinfo.bday}}" placeholder="" required>
+                            
+                        </div>
+                    </div>
+                    
+
+                   
+
+                    <div class="form-group form-actions">
+                        <div class="col-xs-12">
+                            <button type="submit" class="btn btn-sm btn-success"onclick="return confirm('Do you really want to update user information?');" >Submit</button>
+                            <a href="{% url 'user_details' pk=userinfo.pk %}" data-toggle="tooltip" title="Groups" class="btn btn-sm btn-danger "><i class="fa fa-pencil"> Cancel</i></a>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Input Grid Content -->
+            </div>
+            <!-- END Input Grid Block -->
+        </div>
+        
+    </div>
+    <!-- END Input Grid Row -->
+    
+   
+ 
+  
+</form>
+{% endblock mainblock %}
+
+{% block scriptblock %}
+ 
+  <!--Refesh page-->
+  <script>
+    function refreshPage(){
+        window.location.reload();
+    } 
+    </script>
+
+        <script src="{% static 'back/assets/js/vendor/jquery.min.js' %}"></script>
+        <script src="{% static 'back/assets/js/vendor/bootstrap.min.js' %}" ></script>
+        <script src="{% static 'back/assets/js/plugins.js' %}"></script>
+        <script src="{% static 'back/assets/js/app.js' %}"></script>
+{% endblock scriptblock %}

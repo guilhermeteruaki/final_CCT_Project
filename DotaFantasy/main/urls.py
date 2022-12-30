@@ -12,5 +12,6 @@ urlpatterns = [
     re_path(r'^panel/change_pass', views.change_pass, name='change_pass'),
     re_path(r'^termsandcond', views.termsandcond, name='termsandcond'),
     
+    
 ]
 

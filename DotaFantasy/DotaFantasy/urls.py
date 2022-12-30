@@ -22,6 +22,7 @@ urlpatterns = [
 
     re_path(r'^djangoadmin/' , admin.site.urls),
     re_path(r'' , include('main.urls')),
+    re_path(r'' , include('users.urls')),
     
 
 ]
