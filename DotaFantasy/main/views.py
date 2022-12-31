@@ -2,8 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
-from django.contrib.auth.models import User
-from users import views
+from django.contrib.auth.models import User, Group
 from .models import Main
 from users.models import UserInfo
 
@@ -27,6 +26,9 @@ def termsandcond(request):
     return render(request, 'front/termsandcond.html',  {'site':site, 'msg':msg})
 
 def sign_in(request):
+    if request.user.is_authenticated :
+        return redirect(panel)
+    
     if request.method =="POST":
         uuser = request.POST.get('username')
         upass = request.POST.get('password')
@@ -108,13 +110,14 @@ def sign_up(request):
 
         if count1 == 1 and count2 == 1 and count3 == 1 and count4 == 1 and len(User.objects.filter(username=uname)) == 0 and len(User.objects.filter(email=email)) == 0 :
             user = User.objects.create_user(username=uname,email=email,password=password)
-            print(fname,lname)
+            group = Group.objects.get(name="user")
             user.first_name=fname
             user.last_name=lname
             user.save()
             userInfo = UserInfo(id=user)
             userInfo.birth_day=bday
             userInfo.save()
+            user.groups.add(group)
             return redirect(sign_in)
 
 

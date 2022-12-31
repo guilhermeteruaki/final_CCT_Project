@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'users',
+    'django_crontab',
+    'dotainfo',
     
 ]
 
@@ -98,6 +100,9 @@ DATABASES = {
         'PASSWORD': 'root',
         'HOST':'localhost',
         'PORT':'3306',
+        'OPTIONS': {
+                    'charset': 'utf8mb4',
+        }
     }
 }
 
@@ -146,3 +151,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CRONJOBS = {
+
+    ('*/5 * * * *', 'dotainfo.cron.refresh_API')
+
+}
