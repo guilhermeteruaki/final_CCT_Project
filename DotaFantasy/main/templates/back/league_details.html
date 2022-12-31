@@ -1,0 +1,107 @@
+{% extends 'back/Admintemplate.html' %}
+{% load static %}
+
+{% block headblock %}
+
+<script src="https://cdn.tiny.cloud/1/0fudtnjuf75v2kp0dhp5ga1hzaoseujj520f553o1azfutxj/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<title>{{site.name}} | League Details </title>
+
+
+<link rel="stylesheet" href="{% static 'back/assets/css/bootstrap.min.css' %}">
+
+        <!-- Related styles of various icon packs and plugins -->
+        <link rel="stylesheet" href="{% static 'back/assets/css/plugins.css' %}">
+
+        <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+        <link rel="stylesheet" href="{% static 'back/assets/css/main.css' %}">
+
+        <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
+
+        <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
+        <link rel="stylesheet" href="{% static 'back/assets/css/themes.css' %}">
+        <!-- END Stylesheets -->
+
+        <!-- Modernizr (browser feature detection library) -->
+        <script src="{% static 'back/assets/js/vendor/modernizr.min.js' %}"></script>
+{% endblock headblock %}
+
+{% block mainblock %}
+<!-- Input Grid Row -->
+<div class="row" >
+    <div class="col-md-12">
+        <!-- Input Grid Block -->
+        <div class="block">
+            <!-- Input Grid Title -->
+            <div class="block-title">
+                <h2>  <strong>{{response.league_name}}</strong> information</h2>
+            </div>
+            <!-- END Input Grid Title -->
+
+            <!-- Input Grid Content -->
+                <div class=" row">
+                    <div class="col-md-3">
+                        League ID
+                        <p>{{response.league_id}}</p>
+                        
+                    </div>
+                    <div class="col-md-3">
+                        League Name
+                        <p>{{response.league_name}}</p>
+                        
+                    </div>
+                    <div class="col-md-6">
+                        Start Date
+                        <p>{{response.start_date}}</p>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        League Complete
+                        <p>{{response.is_finished}}</p>
+                        
+                    </div>
+                    <div class="col-md-4">
+                        tier
+                        <p>{{response.tier}}</p>
+                        
+                    </div>
+                    <div class="col-md-4">
+                        is_active
+                        <p>{{response.is_active}}</p>
+                        
+                    </div>
+                </div>
+                <div class = "row">
+                    <div class="col-md-4">
+                        participants
+                        {% for p in response.participants %}
+                        <p>{{p}}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+            
+            <!-- END Input Grid Content -->
+        </div>
+        <!-- END Input Grid Block -->
+    </div>
+    
+</div>
+<!-- END Input Grid Row -->
+{% endblock mainblock %}
+
+{% block scriptblock %}
+ 
+  <!--Refesh page-->
+  <script>
+    function refreshPage(){
+        window.location.reload();
+    } 
+    </script>
+
+        <script src="{% static 'back/assets/js/vendor/jquery.min.js' %}"></script>
+        <script src="{% static 'back/assets/js/vendor/bootstrap.min.js' %}" ></script>
+        <script src="{% static 'back/assets/js/plugins.js' %}"></script>
+        <script src="{% static 'back/assets/js/app.js' %}"></script>
+{% endblock scriptblock %}

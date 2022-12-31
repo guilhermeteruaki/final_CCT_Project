@@ -238,17 +238,6 @@ def edit_user(request,pk):
         userinfo={"pk":pk, "bday":bday, "fname":fname, "lname":lname, "mname":mname, "email":email, "uname":uname,"ugroup":ugroup, "group":group}
 
     
-
-
-    # login check start
-    if not request.user.is_authenticated :
-        return redirect(sign_in)
-    # login check end
-
-    if len(User.objects.filter(pk=pk)) == 0 :
-        error = "User Not Found"
-        return render(request, 'back/error.html' , {'error':error})
-
     u = User.objects.get(pk=pk)
     uinfo = UserInfo.objects.get(pk=pk)
 

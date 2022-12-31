@@ -46,14 +46,15 @@ class LeagueGames(models.Model):
 
 class LeagueDetails(models.Model):
     league_id = models.BigIntegerField(primary_key=True)
-    league_name = models.CharField(max_length=45, blank=True, null=True)
+    league_name = models.CharField(max_length=255, blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     is_finished = models.IntegerField()
-
+    participants = models.JSONField(blank=True, null=True)
+    tier = models.CharField(max_length=45, blank=True, null=True)
+    is_active = models.IntegerField(blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'league_details'
-
 
 
 
