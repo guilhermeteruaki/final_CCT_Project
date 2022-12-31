@@ -125,7 +125,7 @@ def league_details(request,pk):
         
     #print(pk.keys())
     site = Main.objects.get(pk=3)
-    leagues = LeagueDetails.objects.filter(pk=pk)
+    leagues = LeagueDetails.objects.filter(league_id=pk)
 
     for u in leagues:
         pk = u.league_id
