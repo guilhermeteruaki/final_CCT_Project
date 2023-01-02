@@ -376,23 +376,72 @@ def create_user_team(request, lid, uid):
             error = "All Fields Requirded"
             return render(request, 'back/error.html' , {'error':error})
 
-        if len(UsersTeam.objects.filter(user_team_name=user_team_name))==0: 
+        if len(UsersTeam.objects.filter(user=user))!=0 and len(UsersTeam.objects.filter(league=league))!=0: 
+            error = "You already have a team in this league"
+            return render(request, 'back/error.html' , {'error':error})
+        else:
             userteam = UsersTeam(user=user, league=league, user_team_name=user_team_name )
             userteam.save()
-        else:
-            error = "Name already in use"
-            return render(request, 'back/error.html' , {'error':error})
+           
 
-        return redirect(list_user_team, userteam.user_team_id)
+        return redirect(list_all_user_teams, userteam.user_team_id)
 
     return render(request, 'back/user_create_team.html', {"site":site, "league":league})
 
 
-def list_user_team(request, tid):
+def list_all_user_teams(request):
+    # login check start
+    if not request.user.is_authenticated :
+        return redirect(sign_in)
+    # login check end
+    accesslvl =1
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+        
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
 
+    site = Main.objects.get(pk=3)
 
+    result = UsersTeam.objects.all().order_by('user_team_id')
+    
+    paginator = Paginator(result, 10)
+    page = request.GET.get('page')
+    try:
+        response = paginator.page(page)
+    except EmptyPage: 
+        response = paginator.page(paginator.num_page)
+    except PageNotAnInteger:
+        response = paginator.page(1)
 
-    return
+    return render(request, 'back/list_all_user_teams.html',  {"site":site,"response":response})
+ 
+def delete_user_team(request, pk):
+    # login check start
+    if not request.user.is_authenticated :
+        return redirect(sign_in)
+    # login check end
+    accesslvl =1
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+        
+
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+        
+
+    team = UsersTeam.objects.get(pk=pk)
+    print(team)
+    team.delete()
+    
+    
+    return redirect(list_all_user_teams)
 
 
 

@@ -30,8 +30,9 @@ class UsersTeam(models.Model):
     user_team_id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(User, models.DO_NOTHING)
     league = models.ForeignKey('dotainfo.LeagueDetails', models.DO_NOTHING)
-    user_team_name = models.CharField(unique=True, max_length=45)
-
+    user_team_name = models.CharField(max_length=45)
+    team_score = models.IntegerField(default=0)
+    
     class Meta:
         managed = False
         db_table = 'users_team'
