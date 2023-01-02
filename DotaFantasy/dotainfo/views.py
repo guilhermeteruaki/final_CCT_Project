@@ -105,7 +105,6 @@ def league_lists(request):
     except PageNotAnInteger:
         response = paginator.page(1)
 
-    print(response.object_list.values())
     return render(request, 'back/league_lists.html',  {"site":site,"response":response})
 
 def league_details(request,pk):
@@ -123,7 +122,7 @@ def league_details(request,pk):
         error = "Acess denied! Log-in with the correct account"
         return render(request, 'back/error.html' , {'error':error})
         
-    #print(pk.keys())
+    
     site = Main.objects.get(pk=3)
     leagues = LeagueDetails.objects.filter(league_id=pk)
 
@@ -134,14 +133,69 @@ def league_details(request,pk):
         is_finished = u.is_finished
         participants = u.participants
         tier = u.tier
+        is_active = u.is_active
 
 
         response={"pk":pk, "league_name":league_name, "start_date":start_date, "is_finished":is_finished,
-                    "participants":participants, "tier":tier}
+                    "participants":participants, "tier":tier, "is_active":is_active}
         
     return render(request, 'back/league_details.html',  {"site":site,"response":response})
 
+def activate_league(request, lid):
+    # login and permission check start
+    if not request.user.is_authenticated :
+        return redirect(sign_in)
+    accesslvl =1
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+    # login check end
 
+    league = LeagueDetails.objects.get(league_id=lid)
+    if league.is_active==1:
+        error = "This league is already active"
+        return render(request, 'back/error.html' , {'error':error})
+    else:
+        league.is_active=1
+        league.save()
+    return redirect(active_league_list)
+    
+    
+def active_league_list(request):
+    # login and permission check start
+    if not request.user.is_authenticated :
+        return redirect(sign_in)
+    accesslvl =2
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+    # login check end
+    site = Main.objects.get(pk=3)
+
+
+    league = LeagueDetails.objects.filter(is_active=1).order_by('league_id')
+    paginator = Paginator(league, 10)
+    page = request.GET.get('page')
+    try:
+        response = paginator.page(page)
+    except EmptyPage: 
+        response = paginator.page(paginator.num_page)
+    except PageNotAnInteger:
+        response = paginator.page(1)
+
+
+    return render(request, 'back/active_league_list.html',  {"site":site,"response":response})
+    
+    
+    
 #update database with API requests
 def updatedb(request):
 

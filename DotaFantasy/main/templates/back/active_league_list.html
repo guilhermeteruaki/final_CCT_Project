@@ -14,7 +14,7 @@
    <div class="content-header">
     <div class="header-section">
         <h5>
-            <i class="fa fa-table"></i>Pro Leagues<br><small> See all pro Leagues from Opendota</small>
+            <i class="fa fa-table"></i>Active Pro Leagues<br><small> See all pro Leagues accepting a fantasy team</small>
         </h5>
     </div>
 </div>
@@ -53,7 +53,7 @@
                             <td >
                                 <div class="btn-group">
                                    
-                                <a href=" {%url 'league_details' pk=u.league_id %}" data-toggle="tooltip" title="Groups" class="btn "><i class="fa fa-pencil"> League Details</i></a>
+                                <a href=" {%url 'create_user_team' lid=u.league_id uid=request.user.pk %}" data-toggle="tooltip" title="Groups" class="btn "><i class="fa fa-pencil"> Create a team</i></a>
                                 </div> 
                                 
                             </td>

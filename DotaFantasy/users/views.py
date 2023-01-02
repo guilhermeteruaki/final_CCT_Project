@@ -3,28 +3,28 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User, Group, Permission
-from .models import UserInfo
+from .models import *
 from main.models import Main
 from main.views import *
+from dotainfo.views import *
 
-def userinfo(request):
-    # login check start
-    if not request.user.is_authenticated :
-        return redirect(sign_in)
-    # login check end
-    accesslvl =1
-    perm = 10
-    for i in request.user.groups.all():
-        if i.name == "user":perm = 2
-        if i.name == "admin":perm = 1
+def all_user_info(pk):
+
+    users = UserInfo.objects.filter(pk=pk)
+    for u in users:
         
+        pk = u.id.pk
+        fname = u.id.first_name
+        lname = u.id.last_name
+        mname = u.midle_name
+        email = u.id.email
+        bday = u.birth_day
+        uname = u.id.username
+        group = u.id.groups.all()
 
-    if perm>accesslvl: 
-        error = "Acess denied! Log-in with the correct account"
-        return render(request, 'back/error.html' , {'error':error})
-        
+        userinfo={"pk":pk, "bday":bday, "fname":fname, "lname":lname, "mname":mname, "email":email, "uname":uname, "group":group}
 
-    return render(request, 'middle/userpage.html')
+    return userinfo
 
 def users_list(request):
     # login check start
@@ -183,19 +183,9 @@ def user_details(request,pk):
         
 
     site = Main.objects.get(pk=3)
-    users = UserInfo.objects.filter(pk=pk)
-    for u in users:
-        
-        pk = u.id.pk
-        fname = u.id.first_name
-        lname = u.id.last_name
-        mname = u.midle_name
-        email = u.id.email
-        bday = u.birth_day
-        uname = u.id.username
-        group = u.id.groups.all()
+    userinfo=all_user_info(pk=pk)
 
-        userinfo={"pk":pk, "bday":bday, "fname":fname, "lname":lname, "mname":mname, "email":email, "uname":uname, "group":group}
+      
         
    
    
@@ -328,5 +318,82 @@ def remove_user_from_group(request, pk, gname):
     user.groups.remove(group)
     
     return redirect(user_details, pk)    
+
+def profile_page(request):
+    
+    # login check start
+    if not request.user.is_authenticated :
+        return redirect(sign_in)
+    # login check end
+    accesslvl =2
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+        
+
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+        
+
+    site = Main.objects.get(pk=3)
+    pk = request.user.pk
+    if pk==1: redirect(panel)
+    user = all_user_info(pk=pk)
+
+
+
+    
+
+    return render(request, 'back/profile_page.html', {"site":site, "user":user})
+
+def create_user_team(request, lid, uid):
+    # login check start
+    if not request.user.is_authenticated :
+        return redirect(sign_in)
+    # login check end
+    accesslvl =2
+    perm = 10
+    for i in request.user.groups.all():
+        if i.name == "user":perm = 2
+        if i.name == "admin":perm = 1
+        
+    if perm>accesslvl: 
+        error = "Acess denied! Log-in with the correct account"
+        return render(request, 'back/error.html' , {'error':error})
+
+    site = Main.objects.get(pk=3)
+    
+    user = User.objects.get(pk=uid)
+    league = LeagueDetails.objects.get(league_id=lid)
+
+    if request.method == 'POST':
+    
+        user_team_name = request.POST.get('user_team_name')
+        
+        if user_team_name == "" :
+            error = "All Fields Requirded"
+            return render(request, 'back/error.html' , {'error':error})
+
+        if len(UsersTeam.objects.filter(user_team_name=user_team_name))==0: 
+            userteam = UsersTeam(user=user, league=league, user_team_name=user_team_name )
+            userteam.save()
+        else:
+            error = "Name already in use"
+            return render(request, 'back/error.html' , {'error':error})
+
+        return redirect(list_user_team, userteam.user_team_id)
+
+    return render(request, 'back/user_create_team.html', {"site":site, "league":league})
+
+
+def list_user_team(request, tid):
+
+
+
+    return
+
+
 
 

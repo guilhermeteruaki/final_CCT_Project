@@ -32,8 +32,15 @@
         <!-- Input Grid Block -->
         <div class="block">
             <!-- Input Grid Title -->
-            <div class="block-title">
-                <h2>  <strong>{{response.league_name}}</strong> information</h2>
+            <div class = "block-title">
+                <div >
+                    <h2>  <strong>{{response.league_name}}</strong> information</h2>
+                </div>
+            
+                <div class="btn-group ">
+                                   
+                    <a href=" {% url 'activate_league' lid=response.pk %} " data-toggle="tooltip" title="Groups" class="btn "><i class="fa fa-pencil"> activate league</i></a>
+                </div> 
             </div>
             <!-- END Input Grid Title -->
 
@@ -41,7 +48,7 @@
                 <div class=" row">
                     <div class="col-md-3">
                         League ID
-                        <p>{{response.league_id}}</p>
+                        <p>{{response.pk}}</p>
                         
                     </div>
                     <div class="col-md-3">
@@ -73,11 +80,11 @@
                     </div>
                 </div>
                 <div class = "row">
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         participants
-                        {% for p in response.participants %}
-                        <p>{{p}}</p>
-                        {% endfor %}
+                        <p>{% for p in response.participants %}
+                          | {{p}} | - 
+                        {% endfor %}</p>
                     </div>
                 </div>
                 
