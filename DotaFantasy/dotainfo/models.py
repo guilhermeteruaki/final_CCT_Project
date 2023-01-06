@@ -18,7 +18,8 @@ class Players(models.Model):
         db_table = 'players'
 
 class PlayerResults(models.Model):
-    player = models.OneToOneField('Players', models.DO_NOTHING, primary_key=True)
+    id = models.BigIntegerField(primary_key=True)
+    player = models.ForeignKey('Players', models.DO_NOTHING)
     game = models.ForeignKey('LeagueGames', models.DO_NOTHING)
     kills = models.IntegerField(blank=True, null=True)
     deaths = models.IntegerField(blank=True, null=True)
@@ -30,7 +31,17 @@ class PlayerResults(models.Model):
     class Meta:
         managed = False
         db_table = 'player_results'
-        unique_together = (('player', 'game'),)
+        unique_together = (('player', 'game'))
+
+class PlayerScore(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    player = models.ForeignKey('Players', models.DO_NOTHING, blank=True, null=True)
+    league = models.ForeignKey('LeagueDetails', models.DO_NOTHING, blank=True, null=True)
+    score = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'player_score'
 
 class LeagueGames(models.Model):
     game_id = models.BigIntegerField(primary_key=True)

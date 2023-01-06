@@ -5,6 +5,7 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User, Group
 from .models import Main
 from users.models import UserInfo
+from users.views import profile_page 
 
 
 #views are how the site behaves

@@ -58,7 +58,7 @@
         {% if request.user|has_group:"admin" %}
         
         <li class="sidebar-header">
-          <span class="text-white text-center me-2 d-flex align-items-center justify-content-left">Admin Control</span>
+          <span class="text-white text-center me-2 d-flex align-items-center justify-content-left">Admin Menu</span>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white " href="/panel/site_settings">
@@ -106,37 +106,37 @@
         <li class="nav-item">
           <a class="nav-link text-white " href="/panel/all_users_teams">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">notifications</i>
+              <i class="material-icons opacity-10">groups_3</i>
             </div>
             <span class="nav-link-text ms-1">All teams</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="/panel/updatedb">
+          <a class="nav-link text-white " href="/panel/updatedb" onclick="return confirm('Do you really want to update It will take a long time (>6 min)');">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">notifications</i>
             </div>
-            <span class="nav-link-text ms-1">update DB</span>
+            <span class="nav-link-text ms-1">update DB </br> <small>takes a long time</small></span>
           </a>
         </li>
-        {% endif %}list_all_user_teams
+        {% endif %}
 
         <li class="sidebar-header">
-          <span class="text-white text-center me-2 d-flex align-items-center justify-content-left">User Control</span>
+          <span class="text-white text-center me-2 d-flex align-items-center justify-content-left">Menu</span>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white" href="/panel/active_league_list">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">person</i>
+              <i class="material-icons opacity-10">star_rate</i>
             </div>
             <span class="nav-link-text ms-1">Active leagues</span>
           </a>
         </li>
         {% if request.user|has_group:"user" %}
         <li class="nav-item">
-          <a class="nav-link text-white" href="/panel/profile_page">
+          <a class="nav-link text-white" href="/panel/list_user_teams">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">person</i>
+              <i class="material-icons opacity-10">people</i>
             </div>
             <span class="nav-link-text ms-1">My Teams</span>
           </a>
@@ -259,38 +259,7 @@
    
 
 
-    <footer class="footer py-4  ">
-      <div class="container-fluid">
-        <div class="row align-items-center justify-content-lg-between">
-          <div class="col-lg-6 mb-lg-0 mb-4">
-            <div class="copyright text-center text-sm text-muted text-lg-start">
-              © <script>
-                document.write(new Date().getFullYear())
-              </script>,
-              made with <i class="fa fa-heart"></i> by
-              <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-              for a better web.
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
+    
   </div>
 
 {% block scriptblock %}

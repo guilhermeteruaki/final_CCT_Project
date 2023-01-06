@@ -15,5 +15,7 @@ urlpatterns = [
     re_path(r'^panel/create_team/(?P<lid>\d+)/(?P<uid>\d+)/$', views.create_user_team, name='create_user_team'),
     re_path(r'^panel/all_users_teams/$', views.list_all_user_teams, name='list_all_user_teams'),
     re_path(r'^panel/delete_user_team/(?P<pk>\d+)/$', views.delete_user_team, name='delete_user_team'),
-    
+    re_path(r'^panel/list_user_teams/$', views.list_user_teams, name='list_user_teams'),
+    re_path(r'^panel/list_user_teams/team_details/(?P<pk>\d+)/$', views.team_details, name='team_details'),
+     re_path(r'^panel/list_user_teams/edit_team/(?P<pk>\d+)/$', views.edit_user_team, name='edit_user_team'),
 ]

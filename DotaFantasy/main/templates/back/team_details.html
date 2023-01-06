@@ -1,0 +1,120 @@
+{% extends 'back/Admintemplate.html' %}
+{% load static %}
+
+{% block headblock %}
+
+<script src="https://cdn.tiny.cloud/1/0fudtnjuf75v2kp0dhp5ga1hzaoseujj520f553o1azfutxj/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<title>{{site.name}} | User Details </title>
+
+
+<link rel="stylesheet" href="{% static 'back/assets/css/bootstrap.min.css' %}">
+
+        <!-- Related styles of various icon packs and plugins -->
+        <link rel="stylesheet" href="{% static 'back/assets/css/plugins.css' %}">
+
+        <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+        <link rel="stylesheet" href="{% static 'back/assets/css/main.css' %}">
+
+        <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
+
+        <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
+        <link rel="stylesheet" href="{% static 'back/assets/css/themes.css' %}">
+        <!-- END Stylesheets -->
+
+        <!-- Modernizr (browser feature detection library) -->
+        <script src="{% static 'back/assets/js/vendor/modernizr.min.js' %}"></script>
+{% endblock headblock %}
+
+{% block mainblock %}
+<!-- Input Grid Row -->
+<div class="row" >
+    <div class="col-md-12">
+        <!-- Input Grid Block -->
+        <div class="block">
+            <!-- Input Grid Title -->
+            <div class="block-title">
+                <h2>See team  <strong>{{userteam.user_team_name}}</strong> information</h2>
+            </div>
+            <!-- END Input Grid Title -->
+            
+            <!-- Input Grid Content -->
+            <div class=" row">
+                <div class="col-md-6">
+                    Team Name
+                    <p>{{userteam.user_team_name}}</p>
+                    
+                </div>
+                <div class="col-md-6">
+                    Playing in league
+                    <p>{{userteam.league.league_name}}</p>
+                    
+                </div>
+            </div>
+            <div class="block-title">
+                <h6>Team members</h6>
+                <small> Team members can only be changed on mondays-Wednesdays-fridays</small>
+            </div>
+            <div class=" row">
+                <div><div class="col-md-12">
+                    Player 1
+                    <p>ID: {{teamplayers.player_1.player_id}} Player Name:  {{teamplayers.player_1.player_personaname}}  </p>
+                </div>
+            </div>
+            <div class=" row">
+                <div><div class="col-md-12">
+                    Player 2
+                    <p>ID: {{teamplayers.player_2.player_id}} Player Name:  {{teamplayers.player_2.player_personaname}}  </p>
+                </div>
+            </div>
+            <div class=" row">
+                <div><div class="col-md-12">
+                    Player 3
+                    <p>ID: {{teamplayers.player_3.player_id}} Player Name:  {{teamplayers.player_3.player_personaname}}  </p>
+                </div>  
+            </div>
+            <div class=" row">
+                <div><div class="col-md-12">
+                    Player 4
+                    <p>ID: {{teamplayers.player_4.player_id}} Player Name:  {{teamplayers.player_4.player_personaname}}  </p>
+                </div>
+            </div>
+            <div class=" row">
+                <div><div class="col-md-12">
+                    Player 5
+                    <p>ID: {{teamplayers.player_5.player_id}} Player Name:  {{teamplayers.player_5.player_personaname}}  </p>
+                </div>
+            </div>
+            <div class=" row">
+                <div><div class="col-md-12">
+                    Player 6
+                    <p>ID: {{teamplayers.player_6.player_id}} Player Name:  {{teamplayers.player_6.player_personaname}}  </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'edit_user_team' pk=userteam.user_team_id %}" data-toggle="tooltip" title="Groups" class="btn btn-sm btn-warning "><i class="fa fa-pencil"> Edit</i></a>
+            
+            </div>
+            <!-- END Input Grid Content -->
+                
+        </div>
+        <!-- END Input Grid Block -->
+    </div>
+    
+</div>
+<!-- END Input Grid Row -->
+{% endblock mainblock %}
+
+{% block scriptblock %}
+ 
+  <!--Refesh page-->
+  <script>
+    function refreshPage(){
+        window.location.reload();
+    } 
+    </script>
+
+        <script src="{% static 'back/assets/js/vendor/jquery.min.js' %}"></script>
+        <script src="{% static 'back/assets/js/vendor/bootstrap.min.js' %}" ></script>
+        <script src="{% static 'back/assets/js/plugins.js' %}"></script>
+        <script src="{% static 'back/assets/js/app.js' %}"></script>
+{% endblock scriptblock %}

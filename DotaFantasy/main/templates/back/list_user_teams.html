@@ -1,0 +1,90 @@
+
+
+{% extends 'back/Admintemplate.html' %}
+{% load static %}
+
+{% block headblock %}
+<title>{{site.name}} | Users List </title>
+{% endblock headblock %}
+
+{% block mainblock %}
+
+
+   <!-- Datatables Header -->
+   <div class="content-header">
+    <div class="header-section">
+        <h5>
+            <i class="fa fa-table"></i>Team in leagues<br><small> See all teams in active leagues</small>
+        </h5>
+    </div>
+</div>
+
+<!-- END Datatables Header -->
+
+
+
+  <!-- Datatables Content -->
+  <div class="block full">
+    <div class="block-title">
+        <h2><strong>Teams</strong> List</h2>
+    </div>
+    <div class="block">
+        <!-- Datatables Content -->
+        <div class="block full">
+            <
+        
+            <div class="table-responsive">
+                <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Team ID</th>
+                            <th class="text-center">Player ID</th>
+                            <th class="text-center">League ID</th>
+                            <th>Team name</th>
+                            <th class="text-center">Team score</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for u in response %}
+                        <tr>
+                            <td class="text-center">{{u.user_team_id}}</td>
+                            <td class="text-center">{{u.user.id}}</td>
+                            <td class="text-center">{{u.league.league_id}}</td>
+                            <td >{{u.user_team_name}}</td>
+                            <td class="text-center">{{u.team_score}}</td>
+                            <td >
+                                <div class="btn-group">
+                                    
+                                <a href="{% url 'team_details' pk=u.user_team_id %}" data-toggle="tooltip" title="Groups" class="btn btn-success"><i class="fa fa-pencil"> Team players</i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        {% endfor %}
+                    
+                    
+                    
+                    </tbody>
+                </table>
+                
+                <div class="row">
+                    
+                    <p class ="col-md-1">Page {{response.number}} of {{response.paginator.num_pages}}</p>
+                    {% if response.has_previous %}  
+                    <a href="?page={{response.previous_page_number}}" data-toggle="tooltip" title="previous" class="btn col-md-1"><i class="fa fa-pencil"> Previous</i></a>
+                    {% endif %}
+                    {% if response.has_next %}
+                    <a href="?page={{response.next_page_number}}" data-toggle="tooltip" title="next" class="btn col-md-1 "><i class="fa fa-pencil"> Next</i></a>    
+                    {% endif %}              
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<!-- END Datatables Content -->
+
+{% endblock mainblock %}
+

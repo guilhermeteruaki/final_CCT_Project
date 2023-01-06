@@ -4,9 +4,11 @@ from main.models import Main
 from main.views import *
 from django.contrib.auth.models import User, Group, Permission
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 import requests
 import textwrap
 import pycountry
+import time
 
 
 # Create your views here.
@@ -210,10 +212,20 @@ def updatedb(request):
         error = "Acess denied! Log-in with the correct account"
         return render(request, 'back/error.html' , {'error':error})
     # login check end
-
-    result = update_player_results(6806155276)
-    
-    return render(request, 'back/test.html',  {"result":result})
+   
+    count = 1
+    id =[14268]
+    for j in id:
+        league = LeagueGames.objects.filter(league=j)
+        update_league_games(j)
+        print (j)
+        for i in league :
+            result = update_player_results(i.game_id)
+            time.sleep(1.15)
+            
+            print(count)
+            count +=1
+    return render(request, 'back/test.html' ,  {"result":result})
 
 def update_players():
 
@@ -226,7 +238,8 @@ def update_players():
         steam_id=p.get('steamid')
         player_role=p.get('fantasy_role')
         team_id=p.get('team_id')
-     
+
+        
         b = Players(player_id=player_id, player_personaname=player_personaname, 
                                 player_nationality=player_nationality, steam_id=steam_id, player_role=player_role,
                                 team_id=team_id)
@@ -288,7 +301,8 @@ def update_league_games(leagueID):
     return LeagueGames.objects.all()
 
 def update_player_results(gameID):
-
+    #multipliers
+    m = {"kills":5, "deaths":-2, "assists":3, "lasthit": 0.2, "gpm":2, "xpm":2}
     response = connect_to_API("matches/"+str(gameID))
     
     for i in response.get('players'):
@@ -301,19 +315,52 @@ def update_player_results(gameID):
         last_hits = i.get('last_hits')
         gold_per_minute = i.get('gold_per_min')
         xp_per_minute = i.get('xp_per_min')
+        score = (kills*m.get('kills')+deaths*m.get('deaths')+assists*m.get('assists')+
+                    last_hits*m.get('lasthit')+gold_per_minute*m.get('gpm')+xp_per_minute*m.get('xpm'))
+                    
 
-        b = PlayerResults(player=player, game=game, kills=kills, deaths=deaths, xp_per_minute=xp_per_minute,
-                     assists=assists,last_hits=last_hits, gold_per_minute=gold_per_minute)
-        
-        b.save()
-        
+         #Q operator https://stackoverflow.com/questions/739776/how-do-i-do-an-or-filter-in-a-django-query
+        if PlayerResults.objects.filter(Q(player=player) & Q(game=game)).exists():
+            q = PlayerResults.objects.filter(Q(player=player) & Q(game=game))
+            
+            for b in q: 
+                
+                b.kills=kills
+                b.deaths=deaths
+                b.xp_per_minute=xp_per_minute
+                b.assists=assists
+                b.last_hits=last_hits
+                b.gold_per_minute=gold_per_minute
+                b.save() 
+            S = PlayerScore.objects.filter(Q(player=player.player_id) & Q(league=game.league))
+            for s in S:
+                s.score += score
+                s.save()
+            
+
+        else:
+                      
+            b = PlayerResults(player=player, game=game, kills=kills, deaths=deaths, xp_per_minute=xp_per_minute,
+                        assists=assists,last_hits=last_hits, gold_per_minute=gold_per_minute)
+            b.save()
+            S = PlayerScore(player=player, league = game.league, score = score)
+            S.save()
+            
+                   
 
    
     return LeagueGames.objects.all()
 
 
 
+def test():
+    t = PlayerScore(player=Players.objects.get(pk=88470), league=LeagueDetails.objects.get(pk=14268), score= 5455454)
+    t.save()
 
+
+    a = PlayerScore.objects.all()
+    for i in a:
+        print(i.id, i.player, i.league, i.score)
 
 
 

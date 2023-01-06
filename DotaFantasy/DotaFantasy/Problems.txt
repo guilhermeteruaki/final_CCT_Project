@@ -1,0 +1,2 @@
+-score is always added when player update is radiant_team
+-
