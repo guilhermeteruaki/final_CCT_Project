@@ -18,7 +18,6 @@ def connect_to_API(info):
  
     return requests.get(DotaAPI+info).json()
 
-
 def players_list(request):
     # login and permission check start
     if not request.user.is_authenticated :
@@ -46,7 +45,6 @@ def players_list(request):
 
 
     return render(request, 'back/players_list.html',  {"site":site,"response":response})
-
 
 def players_details(request, pk):
     # login check start
@@ -196,8 +194,6 @@ def active_league_list(request):
 
     return render(request, 'back/active_league_list.html',  {"site":site,"response":response})
     
-    
-    
 #update database with API requests
 def updatedb(request):
 
@@ -221,6 +217,8 @@ def updatedb(request):
         print (j)
         for i in league :
             result = update_player_results(i.game_id)
+            # reduce frequency of calls so not to reach the API limit of 60 calls per minute
+            
             time.sleep(1.15)
             
             print(count)
@@ -350,17 +348,6 @@ def update_player_results(gameID):
 
    
     return LeagueGames.objects.all()
-
-
-
-def test():
-    t = PlayerScore(player=Players.objects.get(pk=88470), league=LeagueDetails.objects.get(pk=14268), score= 5455454)
-    t.save()
-
-
-    a = PlayerScore.objects.all()
-    for i in a:
-        print(i.id, i.player, i.league, i.score)
 
 
 

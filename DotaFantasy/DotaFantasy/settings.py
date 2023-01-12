@@ -26,13 +26,9 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(config('DEBUG')))
 
-ALLOWED_HOSTS = []
-ALLOWED_HOSTS.extend(
-    filter(
-        None,
-        os.environ.get('ALLOWED_HOSTS', '').split(',')
-    )
-)
+ALLOWED_HOSTS = [config('HOSTS1'), config('HOSTS2'), config('HOSTS3')
+]
+
 
 
 # Application definition
