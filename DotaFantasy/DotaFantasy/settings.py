@@ -100,7 +100,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'final_project',
         'USER': 'root',
-        'PASSWORD': 'root', #000webhost >M#YSzel}jAR6J!&
+        'PASSWORD': 'root',
         'HOST':'localhost',
         'PORT':'3306',
         'OPTIONS': {

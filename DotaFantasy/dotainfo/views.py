@@ -205,7 +205,7 @@ def updatedb(request):
         if i.name == "user":perm = 2
         if i.name == "admin":perm = 1
     if perm>accesslvl: 
-        error = "Acess denied! Log-in with the correct account"
+        error = "Access denied! Log-in with the correct account"
         return render(request, 'back/error.html' , {'error':error})
     # login check end
    
