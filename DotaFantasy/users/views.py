@@ -386,6 +386,12 @@ def create_user_team(request, lid, uid):
             userteam = UsersTeam(user=user, league=league, user_team_name=user_team_name )
             userteam.save()
             TP =UsersTeamPlayers(team=userteam, league=league)
+            TP.player_1 = 1
+            TP.player_2 = 1
+            TP.player_3 = 1
+            TP.player_4 = 2
+            TP.player_5 = 2
+            TP.player_6 = 2  
             TP.save()
            
 
@@ -542,7 +548,7 @@ def edit_user_team(request, pk):
     # mon =0 tue=1 wed=2 thur=3 fri=4 sat=5 sun=6
     today = date.weekday(date.today())
     
-    if today == 0 or today == 2 or today == 4:
+    if today == 0 or today == 2 or today == 6:
         
 
         u = UsersTeam.objects.get(user_team_id=pk)
